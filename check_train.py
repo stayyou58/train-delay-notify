@@ -2,6 +2,8 @@ import requests
 import os
 from datetime import datetime, timedelta
 
+TW_TZ = timezone(timedelta(hours=8))
+
 TDX_CLIENT_ID = os.environ["TDX_CLIENT_ID"]
 TDX_CLIENT_SECRET = os.environ["TDX_CLIENT_SECRET"]
 DISCORD_WEBHOOK_URL = os.environ["DISCORD_WEBHOOK_URL"]
@@ -28,7 +30,7 @@ def send_discord(message):
     requests.post(DISCORD_WEBHOOK_URL, json={"content": message})
 
 def get_status(train_no, delay_map, depart_time_str):
-    now = datetime.now()
+    now = datetime.now(TW_TZ)
     h, m = map(int, depart_time_str.split(":"))
     depart_dt = now.replace(hour=h, minute=m, second=0, microsecond=0)
 
