@@ -1,6 +1,9 @@
 import requests
 import os
 from datetime import datetime, timedelta, timezone
+from dotenv import load_dotenv
+
+load_dotenv()
 
 TW_TZ = timezone(timedelta(hours=8))
 
@@ -98,11 +101,6 @@ def send_discord(message):
     requests.post(DISCORD_WEBHOOK_URL, json={"content": message})
 
 def main():
-    today = datetime.now(TW_TZ).weekday()  # 修正時區 bug
-    if today >= 5:
-        print("今天是假日，不發送通知")
-        return
-
     try:
         token = get_tdx_token()
         delays = get_delay_info(token)
