@@ -31,11 +31,11 @@ def get_delay_info(token):
 
 def get_train_timetable(token, train_no):
     """取得今日該車次完整停靠站時刻"""
-    url = f"https://tdx.transportdata.tw/api/basic/v3/Rail/TRA/DailyTimetable/Today/TrainNo/{train_no}?%24format=JSON"
+    url = f"https://tdx.transportdata.tw/api/basic/v3/Rail/TRA/DailyTrainTimetable/Today/TrainNo/{train_no}?%24format=JSON"
     headers = {"Authorization": f"Bearer {token}"}
     res = requests.get(url, headers=headers)
     data = res.json()
-    timetables = data.get("DailyTimetables", [])
+    timetables = data.get("TrainTimetables", [])
     if not timetables:
         return []
     return timetables[0].get("StopTimes", [])
