@@ -22,5 +22,7 @@ jobs:
         env:
           TDX_CLIENT_ID: ${{ secrets.TDX_CLIENT_ID }}
           TDX_CLIENT_SECRET: ${{ secrets.TDX_CLIENT_SECRET }}
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL_SELF: ${{ secrets.DISCORD_WEBHOOK_URL_SELF }}
+          DISCORD_WEBHOOK_URL_FAMILY_A: ${{ secrets.DISCORD_WEBHOOK_URL_FAMILY_A }}
+          DISCORD_WEBHOOK_URL_FAMILY_B: ${{ secrets.DISCORD_WEBHOOK_URL_FAMILY_B }}
         run: python check_train.py
