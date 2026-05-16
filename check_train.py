@@ -40,7 +40,7 @@ def tdx_get(url, token, max_retries=3):
         res = requests.get(url, headers=headers)
         _last_tdx_call_at = time.time()
         if res.status_code == 429:
-            time.sleep(2 ** attempt)
+            time.sleep(2**attempt)
             continue
         return res.json()
     return {}
@@ -188,7 +188,17 @@ def main():
             )
         return
 
-    for target in NOTIFY_TARGETS:
+    # [TEMP: SD-4 之前的暫時方案] 用 TARGET_NAME env 過濾要跑的 target，
+    # 讓不同 cron 可以各自觸發單一 target。SD-4 完成後可整段移除。
+    target_filter = os.environ.get("TARGET_NAME")
+    targets = NOTIFY_TARGETS
+    if target_filter:
+        targets = [t for t in NOTIFY_TARGETS if t["name"] == target_filter]
+        if not targets:
+            print(f"no target matches TARGET_NAME={target_filter}")
+            return
+
+    for target in targets:
         process_target(target, token)
 
 
